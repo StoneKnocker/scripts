@@ -35,7 +35,7 @@ set wildmenu
 "display the cursor postion in the lower right corner
 "set ruler "covered by status line
 
-" Show the command you type
+" Show the command you typed
 set showcmd
 
 " Height of the command bar
@@ -65,6 +65,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch 
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -127,31 +128,6 @@ function! MyTabLine()
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set background=dark
-    colorscheme solarized
-    set guioptions-=T
-    set guioptions-=m       "close menu of gvim
-    set t_Co=256
-endif
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-"filecodings
-set fileencodings=gb2312,utf-8
-set termencoding=utf-8
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs except makefiles
@@ -183,50 +159,54 @@ set wrap "Wrap lines
 let mapleader = ","
 let g:mapleader = ","
 
-"let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
-"let g:winManagerWidth = 30
-"let g:defaultExplorer = 0
-"map <silent> <leader>wm :WMToggle<cr>
-
 " Filelist and Taglist
 map <silent> <leader>fl :NERDTreeToggle<cr>
 map <silent> <leader>tl :Tlist<cr>
+let Tlist_Show_One_File        = 1      " show tags current file only
+let Tlist_Exit_OnlyWindow      = 1      " exit when the taglist is the last
+let Tlist_Use_Right_Window     = 1      " show at right side
+let Tlist_File_Fold_Auto_Close = 1      " auto fold
 
-" Buflist: <leader>bv
-let g:bufExplorerDefaultHelp=0       " Do not show default help.
-let g:bufExplorerShowRelativePath=1  " Show relative paths.
-let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-let g:bufExplorerSplitRight=0        " Split left.
-let g:bufExplorerSplitVertical=1     " Split vertically.
-let g:bufExplorerSplitVertSize = 30  " Split width
-let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-autocmd BufWinEnter \[Buf\ List\] setl nonumber
+"" Buflist: <leader>bv
+"let g:bufExplorerDefaultHelp=0       " Do not show default help.
+"let g:bufExplorerShowRelativePath=1  " Show relative paths.
+"let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+"let g:bufExplorerSplitRight=0        " Split left.
+"let g:bufExplorerSplitVertical=1     " Split vertically.
+"let g:bufExplorerSplitVertSize = 30  " Split width
+"let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+"autocmd BufWinEnter \[Buf\ List\] setl nonumber
+
+" Minibufferexpl
+let g:miniBufExplMapWindowNavVim    = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs  = 1
+let g:miniBufExplModSelTarget       = 1
+let g:miniBufExplForceSyntaxEnable = 1
+let g:miniBufExplorerMoreThanOne=2
+let g:miniBufExplCycleArround=1
+map <silent><leader>bl :MBEToggle<cr>
+map <silent><leader>bn :MBEbn<cr>
+map <silent><leader>bp :MBEbp<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-ab #p #! /usr/bin/python<cr>
+ab abcpp #include <iostream><cr><cr>using std::cout;<cr>using std::cin;<cr>using std::endl;<cr><cr>
+ab abmain int main()<cr>{<cr>}<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Settings about tabs, windows and buffers
+" Settings about page tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a draft tab
 map <silent> <leader>dt :tabnew<cr>:setl buftype=nofile<cr> 
 
 " Disable highlight when <leader><leader> is pressed
-map <silent> <leader><leader> :noh<cr>
+map <silent> <leader><cr> :noh<cr>
 
 " Fast saving or leaving
 map <leader>ww :w<cr>
 map <leader>qq :q<cr>
-map <leader>qf :q!<cr>
-
-" Faster way to move between windows
-" conflict with tmux
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
 
 " Useful mappings for managing tabs and windows
 map <leader>te :tabedit 
@@ -311,7 +291,7 @@ endfunction
 let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Mark settings(high lighting)
+" Mark settings(highlight the word under the cursor)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>hl <Plug>MarkSet
 vmap <silent> <leader>hl <Plug>MarkSet
@@ -319,24 +299,6 @@ nmap <silent> <leader>hc <Plug>MarkClear
 vmap <silent> <leader>hc <Plug>MarkClear
 nmap <silent> <leader>hr <Plug>MarkRegex
 vmap <silent> <leader>hr <Plug>MarkRegex
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Compiling settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F3> :call RunScript()<cr>
-
-function! RunScript()
-    if &filetype == "sh"
-        exec "!sh %"
-    elseif &filetype == "python"
-        exec "!python %"
-    endif
-endfunction
-
-" makeprg settings
-nmap <leader>cn :cn<cr>
-nmap <leader>cp :cp<cr>
-nmap <leader>cw :cw 10<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tmux settings
@@ -348,6 +310,64 @@ nmap <silent> <c-j> :TmuxNavigateDown<cr>
 nmap <silent> <c-k> :TmuxNavigateUp<cr>
 nmap <silent> <c-l> :TmuxNavigateRight<cr>
 nmap <silent> <c-\> :TmuxNavigatePrevious<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_cache_omnifunc = 0
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+"let g:ycm_collect_identifiers_from_comments_and_strings = 0"
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+"nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ultisnips
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories=["snippets", "bundle/ultisnips/UltiSnips"]
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let NERDSpaceDelims = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:syntastic_error_symbol = '>>'  "set error or warning signs
+let g:syntastic_warning_symbol = '>*'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting = 0
+"let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
+let g:syntastic_python_checkers=['pyflakes']
+"highlight SyntasticErrorSign guifg=white guibg=black
+
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+let g:syntastic_enable_balloons = 1 "whether to show balloons
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent><leader>tb :TagbarToggle<cr>
+let g:tagbar_autofocus = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
@@ -365,13 +385,49 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'genutils'
 Plugin 'mbriggs/mark.vim'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'lookupfile'
 Plugin 'The-NERD-tree'
 Plugin 'taglist.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-surround'
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'majutsushi/tagbar'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'SirVer/ultisnips'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax enable 
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set background=dark
+    colorscheme solarized
+    set guioptions-=T
+    set guioptions-=m       "close menu of gvim
+    set t_Co=256
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Filecodings
+set fileencodings=gb2312,utf-8
+set termencoding=utf-8
+
