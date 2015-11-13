@@ -28,6 +28,7 @@ set so=7
 
 " Show line number
 set nu
+set relativenumber
 
 " Turn on the WiLd menu
 set wildmenu
@@ -161,23 +162,14 @@ let g:mapleader = ","
 
 " Filelist and Taglist
 map <silent> <leader>fl :NERDTreeToggle<cr>
-map <silent> <leader>tl :Tlist<cr>
-let Tlist_Show_One_File        = 1      " show tags current file only
-let Tlist_Exit_OnlyWindow      = 1      " exit when the taglist is the last
-let Tlist_Use_Right_Window     = 1      " show at right side
-let Tlist_File_Fold_Auto_Close = 1      " auto fold
-
-"" Buflist: <leader>bv
-"let g:bufExplorerDefaultHelp=0       " Do not show default help.
-"let g:bufExplorerShowRelativePath=1  " Show relative paths.
-"let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-"let g:bufExplorerSplitRight=0        " Split left.
-"let g:bufExplorerSplitVertical=1     " Split vertically.
-"let g:bufExplorerSplitVertSize = 30  " Split width
-"let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-"autocmd BufWinEnter \[Buf\ List\] setl nonumber
+"map <silent> <leader>tl :Tlist<cr>
+"let Tlist_Show_One_File        = 1      " show tags current file only
+"let Tlist_Exit_OnlyWindow      = 1      " exit when the taglist is the last
+"let Tlist_Use_Right_Window     = 1      " show at right side
+"let Tlist_File_Fold_Auto_Close = 1      " auto fold
 
 " Minibufferexpl
+let g:miniBufExplorerAutoStart = 0
 let g:miniBufExplMapWindowNavVim    = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs  = 1
@@ -252,45 +244,6 @@ nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 set tags=./tags,./TAGS,tags,TAGS
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Lookupfile settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:LookupFile_MinPatLength = 2
-let g:LookupFile_PreserveLastPattern = 0
-let g:LookupFile_PreservePatternHistory = 0
-let g:LookupFile_AlwaysAcceptFirst = 1
-let g:LookupFile_AllowNewFiles = 0
-let g:LookupFile_UsingSpecializedTags = 1
-let g:LookupFile_Bufs_LikeBufCmd = 0
-let g:LookupFile_ignorecase = 1
-let g:LookupFile_smartcase = 1
-if filereadable("./filenametags")
-   let g:LookupFile_TagExpr = '"./filenametags"'
-endif
-nmap <silent> <leader>lf :LUTags<cr>
-nmap <silent> <leader>lb :LUBufs<cr>
-nmap <silent> <leader>ld :LUWalk<cr>
-
-" Lookup file with ignore case
-function! LookupFile_IgnoreCaseFunc(pattern)
-   let _tags = &tags
-   try
-       let &tags = eval(g:LookupFile_TagExpr)
-       let newpattern = '\c' . a:pattern
-       let tags = taglist(newpattern)
-   catch
-       echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
-       return ""
-   finally
-       let &tags = _tags
-   endtry
-
-   " Show the matches for what is typed so far.
-   let files = map(tags, 'v:val["filename"]')
-   return files
-endfunction
-let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mark settings(highlight the word under the cursor)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>hl <Plug>MarkSet
@@ -329,8 +282,8 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 "nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ultisnips
@@ -339,11 +292,6 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetDirectories=["snippets", "bundle/ultisnips/UltiSnips"]
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tagbar settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let NERDSpaceDelims = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
@@ -368,6 +316,8 @@ let g:syntastic_enable_balloons = 1 "whether to show balloons
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent><leader>tb :TagbarToggle<cr>
 let g:tagbar_autofocus = 1
+let NERDSpaceDelims = 1
+let g:tagbar_sort = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
@@ -378,29 +328,33 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 
-" other plugins
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'genutils'
-Plugin 'mbriggs/mark.vim'
-"Plugin 'ervandew/supertab'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'lookupfile'
+" File manage
+"Plugin 'jlanzarotta/bufexplorer'
 Plugin 'The-NERD-tree'
-Plugin 'taglist.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-surround'
-Plugin 'Valloric/YouCompleteMe'
-
-Plugin 'majutsushi/tagbar'
+Plugin 'kien/ctrlp.vim' "instead of lookupfile
 Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'taglist.vim'
+Plugin 'majutsushi/tagbar'
+
+" Programs moveing and editing
+Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/delimitMate'
+"Plugin 'fcitx.vim'
+Plugin 'vim-scripts/VimIM'
+
+" Programs check
 Plugin 'scrooloose/syntastic'
+
+" Others
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -431,3 +385,8 @@ set ffs=unix,dos,mac
 set fileencodings=gb2312,utf-8
 set termencoding=utf-8
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tests
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+:let g:vimim_cloud = 'sogou,baidu,qq'  
+:let g:vimim_map = 'tab_as_gi'  
