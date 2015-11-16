@@ -177,6 +177,7 @@ let g:miniBufExplModSelTarget       = 1
 let g:miniBufExplForceSyntaxEnable = 1
 let g:miniBufExplorerMoreThanOne=2
 let g:miniBufExplCycleArround=1
+let g:miniBufExplBRSplit = 0
 map <silent><leader>bl :MBEToggle<cr>
 map <silent><leader>bn :MBEbn<cr>
 map <silent><leader>bp :MBEbp<cr>
@@ -212,10 +213,10 @@ map <leader>wo :only<cr>
 " Completion settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Close preview window when 'completion'<c-x><c-o>
-set completeopt=longest,menu
+" set completeopt=longest,menu
 
 " Stop complete when press enter
-inoremap <expr> <cr>    pumvisible()?"\<C-Y>":"\<CR>"
+" inoremap <expr> <cr>    pumvisible()?"\<C-Y>":"\<CR>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope and tag settings
@@ -262,12 +263,10 @@ nmap <silent> <c-h> :TmuxNavigateLeft<cr>
 nmap <silent> <c-j> :TmuxNavigateDown<cr>
 nmap <silent> <c-k> :TmuxNavigateUp<cr>
 nmap <silent> <c-l> :TmuxNavigateRight<cr>
-nmap <silent> <c-\> :TmuxNavigatePrevious<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_min_num_of_chars_for_completion = 2
@@ -275,14 +274,11 @@ let g:ycm_cache_omnifunc = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0"
-let g:ycm_error_symbol = '>>'
-let g:ycm_warning_symbol = '>*'
+"let g:ycm_error_symbol = 'E'
+"let g:ycm_warning_symbol = 'W'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
-"nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-"nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -296,20 +292,28 @@ let g:UltiSnipsSnippetDirectories=["snippets", "bundle/ultisnips/UltiSnips"]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_error_symbol = '>>'  "set error or warning signs
-let g:syntastic_warning_symbol = '>*'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting = 0
-"let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
-let g:syntastic_python_checkers=['pyflakes']
-"highlight SyntasticErrorSign guifg=white guibg=black
+"let g:syntastic_error_symbol = 'E'  "set error or warning signs
+"let g:syntastic_warning_symbol = 'W'
+"let g:syntastic_check_on_open=1
+"let g:syntastic_enable_highlighting = 0
+""let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
+"let g:syntastic_python_checkers=['pyflakes']
+""highlight SyntasticErrorSign guifg=white guibg=black
+"
+"let g:syntastic_cpp_include_dirs = ['/usr/include/']
+"let g:syntastic_cpp_remove_include_errors = 1
+"let g:syntastic_cpp_check_header = 1
+"let g:syntastic_cpp_compiler = 'clang++'
+"let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+"let g:syntastic_enable_balloons = 1 "whether to show balloons
 
-let g:syntastic_cpp_include_dirs = ['/usr/include/']
-let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
-let g:syntastic_enable_balloons = 1 "whether to show balloons
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar settings
@@ -331,12 +335,11 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 
 " File manage
-"Plugin 'jlanzarotta/bufexplorer'
 Plugin 'The-NERD-tree'
 Plugin 'kien/ctrlp.vim' "instead of lookupfile
 Plugin 'fholgado/minibufexpl.vim'
 "Plugin 'taglist.vim'
-Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar' "instead of taglist
 
 " Programs moveing and editing
 Plugin 'mbriggs/mark.vim'
@@ -347,7 +350,6 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/delimitMate'
 "Plugin 'fcitx.vim'
-Plugin 'vim-scripts/VimIM'
 
 " Programs check
 Plugin 'scrooloose/syntastic'
@@ -388,5 +390,8 @@ set termencoding=utf-8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tests
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:let g:vimim_cloud = 'sogou,baidu,qq'  
-:let g:vimim_map = 'tab_as_gi'  
+"let g:vimim_cloud = 'sogou,baidu,qq'  
+" let g:vimim_map = 'tab_as_gi'  
+"let g:vimim_shuangpin = 1
+let g:vimim_shuangpin = 'flypy'
+let g:Vimim_cloud = -1
