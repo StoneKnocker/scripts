@@ -1,8 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " filename: .vimrc
 "
-" based on: https://github.com/amix/vimrc
-" and       https://github.com/easwy/share
 " install:  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "           :BundleInstall
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,7 +184,6 @@ map <silent><leader>bp :MBEbp<cr>
 " abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ab abcpp #include <iostream><cr><cr>using std::cout;<cr>using std::cin;<cr>using std::endl;<cr><cr>
-ab abmain int main()<cr>{<cr>}<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings about page tabs, windows and buffers
@@ -274,8 +271,8 @@ let g:ycm_cache_omnifunc = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
-"let g:ycm_error_symbol = 'E'
-"let g:ycm_warning_symbol = 'W'
+let g:ycm_error_symbol = 'E'
+let g:ycm_warning_symbol = 'W'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
@@ -287,26 +284,10 @@ nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=["snippets", "bundle/ultisnips/UltiSnips"]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:syntastic_error_symbol = 'E'  "set error or warning signs
-"let g:syntastic_warning_symbol = 'W'
-"let g:syntastic_check_on_open=1
-"let g:syntastic_enable_highlighting = 0
-""let g:syntastic_python_checker="flake8,pyflakes,pep8,pylint"
-"let g:syntastic_python_checkers=['pyflakes']
-""highlight SyntasticErrorSign guifg=white guibg=black
-"
-"let g:syntastic_cpp_include_dirs = ['/usr/include/']
-"let g:syntastic_cpp_remove_include_errors = 1
-"let g:syntastic_cpp_check_header = 1
-"let g:syntastic_cpp_compiler = 'clang++'
-"let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
-"let g:syntastic_enable_balloons = 1 "whether to show balloons
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -390,8 +371,3 @@ set termencoding=utf-8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tests
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:vimim_cloud = 'sogou,baidu,qq'  
-" let g:vimim_map = 'tab_as_gi'  
-"let g:vimim_shuangpin = 1
-let g:vimim_shuangpin = 'flypy'
-let g:Vimim_cloud = -1
