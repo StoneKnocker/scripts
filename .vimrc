@@ -12,7 +12,7 @@
 set nocompatible
 
 " Sets how many lines of history VIM has to remember
-set history=700
+set history=1000
 
 " Enable filetype plugins
 filetype plugin on
@@ -129,7 +129,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs except makefiles
+" Use spaces instead of tabs except in makefiles
 if &filetype != "make"
     set expandtab
 else
@@ -143,9 +143,9 @@ set tabstop=4 " 1 tab == 4 spaces
 set shiftwidth=4 " indent 4 spaces
 set softtabstop=4 "<BS> del 4 spaces
 
-" Linebreak on 500 characters
-set lbr
-set tw=500
+" Linebreak on 80 characters
+set linebreak
+set textwidth=80
 
 set ai "Auto indent
 set si "Smart indent
@@ -207,15 +207,6 @@ map <leader>wq :close<cr>
 map <leader>wo :only<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Completion settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Close preview window when 'completion'<c-x><c-o>
-" set completeopt=longest,menu
-
-" Stop complete when press enter
-" inoremap <expr> <cr>    pumvisible()?"\<C-Y>":"\<CR>"
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope and tag settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
  if has("cscope")
@@ -275,15 +266,9 @@ let g:ycm_error_symbol = 'E'
 let g:ycm_warning_symbol = 'W'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"let g:ycm_show_diagnostics_ui = 0 "work with syntastic
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ultisnips
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
@@ -295,14 +280,24 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
+nmap <leader>st :SyntasticToggleMode<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ultisnips
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsListSnippets="<c-tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigge="<c-k>"
+"inoremap <c-x><c-k> <c-x><c-k>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent><leader>tb :TagbarToggle<cr>
 let g:tagbar_autofocus = 1
 let NERDSpaceDelims = 1
 let g:tagbar_sort = 0
+nmap <silent><leader>tb :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
@@ -325,11 +320,10 @@ Plugin 'majutsushi/tagbar' "instead of taglist
 " Programs moveing and editing
 Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-Plugin 'Raimondi/delimitMate'
 "Plugin 'fcitx.vim'
 
 " Programs check
