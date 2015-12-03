@@ -26,15 +26,6 @@ snippet Inc "#include <> (Inc)"
 #include <${1:.h}>
 endsnippet
 
-snippet mark "#pragma mark (mark)"
-#if 0
-${1:#pragma mark -
-}#pragma mark $2
-#endif
-
-$0
-endsnippet
-
 snippet main "main() (main)"
 int main(${1:int argc, char *argv[]})
 {
@@ -83,7 +74,8 @@ typedef ${1:int} ${2:MyCustomType};
 endsnippet
 
 snippet wh "while loop"
-while(${1:/* condition */}) {
+while(${1:/* condition */})
+{
 	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
 endsnippet
@@ -94,10 +86,6 @@ do {
 } while(${1:/* condition */});
 endsnippet
 
-snippet fprintf "fprintf ..."
-fprintf(${1:stderr}, "${2:%s}\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
-endsnippet
-
 snippet if "if .. (if)"
 if (${1:/* condition */})
 {
@@ -106,13 +94,15 @@ if (${1:/* condition */})
 endsnippet
 
 snippet el "else .. (else)"
-else {
+else
+{
 	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
 endsnippet
 
 snippet eli "else if .. (eli)"
-else if (${1:/* condition */}) {
+else if (${1:/* condition */})
+{
 	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
 endsnippet
@@ -128,10 +118,6 @@ else
 }
 endsnippet
 
-snippet printf "printf .. (printf)"
-printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
-endsnippet
-
 snippet st "struct"
 struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`}
 {
@@ -139,15 +125,20 @@ struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`}
 };
 endsnippet
 
-snippet fun "function" b
-${1:void} ${2:function_name}(${3})
-{
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
-}
+snippet (
+(${1})${2}
 endsnippet
 
-snippet fund "function declaration" b
-${1:void} ${2:function_name}(${3});
+snippet [
+[${1}]${2}
 endsnippet
+
+snippet {
+{
+	${1}
+}
+${2}
+endsnippet
+
 
 # vim:ft=snippets:
