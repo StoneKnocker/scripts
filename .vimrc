@@ -9,7 +9,7 @@
 set nocompatible
 
 " Sets how many lines of history VIM has to remember
-set history=1000
+set history=100
 
 " Enable filetype plugins
 filetype plugin on
@@ -77,51 +77,13 @@ set nowb
 set noswapfile
 
 " Format the status line
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \-\-\%P\-\-\ \ Position:\ %l\,\ %c
+"set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \-\-\%P\-\-\ \ Position:\ %l\,\ %c
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-
-" Format the tab title
-set tabline=%!MyTabLine()
-
-function! MyTabLine()
-    let s = ''
-    let t = tabpagenr()
-    let i = 1
-    while i <= tabpagenr('$')
-        let buflist = tabpagebuflist(i)
-        let winnr = tabpagewinnr(i)
-        let s .= '%' . i . 'T'
-        let s .= (i == t ? '%1*' : '%2*')
-        let s .= ' '
-        let s .= i . ':'
-"        let s .= winnr . '/' . tabpagewinnr(i,'$')
-"        let s .= ' %*'
-        let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-        let bufnr = buflist[winnr - 1]
-        let file = bufname(bufnr)
-        let buftype = getbufvar(bufnr, 'buftype')
-        if buftype == 'nofile'
-            if file =~ '\/.'
-                let file = substitute(file, '.*\/\ze.', '', '')
-            endif
-        else
-            let file = fnamemodify(file, ':p:t')
-        endif
-        if file == ''
-            let file = '[No Name]'
-        endif
-        let s .= file
-        let i = i + 1
-    endwhile
-    let s .= '%T%#TabLineFill#%='
-    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-    return s
-endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text, tab and indent related
@@ -155,13 +117,14 @@ set wrap "Wrap lines
 let mapleader = ","
 let g:mapleader = ","
 
-" Filelist and Taglist
+" Filelist
 map <silent> <leader>fl :NERDTreeToggle<cr>
-"map <silent> <leader>tl :Tlist<cr>
-"let Tlist_Show_One_File        = 1      " show tags current file only
-"let Tlist_Exit_OnlyWindow      = 1      " exit when the taglist is the last
-"let Tlist_Use_Right_Window     = 1      " show at right side
-"let Tlist_File_Fold_Auto_Close = 1      " auto fold
+
+" Tagbar settings
+let g:tagbar_autofocus = 1
+let NERDSpaceDelims = 1
+let g:tagbar_sort = 0
+nmap <silent><leader>tl :TagbarToggle<cr>
 
 " Minibufferexpl
 let g:miniBufExplorerAutoStart = 0
@@ -176,11 +139,6 @@ let g:miniBufExplBRSplit = 0
 map <silent><leader>bl :MBEToggle<cr>
 map <silent><leader>bn :MBEbn<cr>
 map <silent><leader>bp :MBEbp<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" abbreviation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-ab abcpp #include <iostream><cr><cr>using std::cout;<cr>using std::cin;<cr>using std::endl;<cr><cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings about page tabs, windows and buffers
@@ -252,15 +210,13 @@ nmap <silent> <c-l> :TmuxNavigateRight<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_cache_omnifunc = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
-let g:ycm_error_symbol = 'E'
-let g:ycm_warning_symbol = 'W'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "let g:ycm_show_diagnostics_ui = 0 "work with syntastic
@@ -289,12 +245,9 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 "inoremap <c-x><c-k> <c-x><c-k>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tagbar settings
+" Airline theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:tagbar_autofocus = 1
-let NERDSpaceDelims = 1
-let g:tagbar_sort = 0
-nmap <silent><leader>tb :TagbarToggle<cr>
+let g:airline_theme='xtermlight'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
@@ -308,7 +261,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 
 " File manage
-Plugin 'The-NERD-tree'
+Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim' "instead of lookupfile
 Plugin 'fholgado/minibufexpl.vim'
 "Plugin 'taglist.vim'
@@ -321,14 +274,19 @@ Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-"Plugin 'fcitx.vim'
 
 " Programs check
 Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+
+" Color schemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jnurmine/Zenburn'
 
 " Others
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -342,15 +300,17 @@ syntax enable
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set background=dark
-    colorscheme solarized
+    "set background=dark
+    set background=light
+    "colorscheme solarized
+    colorscheme zenburn
     set guioptions-=T
     set guioptions-=m       "close menu of gvim
     set t_Co=256
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
+set encoding=utf-8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
@@ -358,6 +318,12 @@ set ffs=unix,dos,mac
 " Filecodings
 set fileencodings=gb2312,utf-8
 set termencoding=utf-8
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" abbreviation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ab abcpp #include <iostream><cr><cr>using std::cout;<cr>using std::cin;<cr>using std::endl;<cr><cr>
+ab abpy #! /usr/bin/python<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tests
