@@ -299,15 +299,13 @@ filetype plugin indent on    " required
 " Enable syntax highlighting
 syntax enable 
 
+set t_Co=256
+set background=dark
+colorscheme solarized
 " Set extra options when running in GUI mode
 if has("gui_running")
-    "set background=dark
-    set background=light
-    "colorscheme solarized
-    colorscheme zenburn
     set guioptions-=T
     set guioptions-=m       "close menu of gvim
-    set t_Co=256
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
