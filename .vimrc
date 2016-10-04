@@ -119,6 +119,7 @@ let g:mapleader = ","
 
 " Filelist
 map <silent> <leader>fl :NERDTreeToggle<cr>
+let NERDTreeIgnore = ['\.pyc$', '\.vim$']
 
 " Tagbar settings
 let g:tagbar_autofocus = 1
@@ -247,7 +248,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme='xtermlight'
+let g:airline_theme='solarized'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
