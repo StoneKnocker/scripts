@@ -1,16 +1,21 @@
 ######################################################################
-# young's some settings
-# usage: add "source ~/.youngrc" in .bashrc
+# some env settings
 ######################################################################
 
+# use vi style in shell
 set -o vi
 
+# dircolors.256dark
+eval `dircolors ~/.dircolors`
+
+# xterm settings
 xrdb ~/.Xresources
 
-export PATH=$PATH:$HOME/sbin
-export TERM=xterm-256color
-
-#aliases
+# aliases
 alias sl='ls'
 alias vi='vim'
 alias start_venv='source venv/bin/activate'
+ 
+# env settings
+export PATH=$PATH:$HOME/sbin
+export TERM="xterm-256color"
