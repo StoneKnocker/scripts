@@ -17,6 +17,7 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
+autocmd CursorHold * checktime
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
@@ -27,9 +28,6 @@ set relativenumber
 
 " Turn on the WiLd menu
 set wildmenu
-
-"display the cursor postion in the lower right corner
-"set ruler "covered by status line
 
 " Show the command you typed
 set showcmd
@@ -69,7 +67,7 @@ set mat=2
 set laststatus=2
 
 " Highlight the screen line of the cursor
-"set cursorline
+set cursorline
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
@@ -102,9 +100,9 @@ set tabstop=4 " 1 tab == 4 spaces
 set shiftwidth=4 " indent 4 spaces
 set softtabstop=4 "<BS> del 4 spaces
 
-" Linebreak on 80 characters
+" Linebreak on 79 characters
 set linebreak
-set textwidth=80
+set textwidth=79
 
 set ai "Auto indent
 set si "Smart indent
@@ -156,11 +154,17 @@ map <leader>qq :q<cr>
 
 " Useful mappings for managing tabs and windows
 map <leader>te :tabedit 
-map <leader>tn :tabnew<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>wq :close<cr>
 map <leader>wo :only<cr>
+
+" Close the preview window automatically
+set previewheight=5
+autocmd CompleteDone * pclose
+set nopreviewwindow
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope and tag settings
@@ -223,6 +227,7 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "let g:ycm_show_diagnostics_ui = 0 "work with syntastic
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
@@ -251,6 +256,15 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:airline_theme='solarized'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ctrlp ignore settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|svn)$',
+    \ 'file': '\v\.(exe|so|dll|pyc|o)$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+    \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off                  " required
@@ -265,7 +279,6 @@ Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim' "instead of lookupfile
 Plugin 'fholgado/minibufexpl.vim'
-"Plugin 'taglist.vim'
 Plugin 'majutsushi/tagbar' "instead of taglist
 
 " Programs moveing and editing
@@ -282,7 +295,6 @@ Plugin 'nvie/vim-flake8'
 
 " Color schemes
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'jnurmine/Zenburn'
 
 " Others
 Plugin 'christoomey/vim-tmux-navigator'
@@ -302,17 +314,18 @@ syntax enable
 set t_Co=256
 set background=dark
 colorscheme solarized
+
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
     set guioptions-=m       "close menu of gvim
 endif
 
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf-8
-
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
+" Set utf8 as standard encoding
+set encoding=utf-8
 
 " Filecodings
 set fileencodings=gb2312,utf-8
@@ -321,8 +334,7 @@ set termencoding=utf-8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-ab abcpp #include <iostream><cr><cr>using std::cout;<cr>using std::cin;<cr>using std::endl;<cr><cr>
-ab abpy #! /usr/bin/python<cr>
+ab abpy #! /usr/bin/env python<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tests
