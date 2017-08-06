@@ -67,7 +67,7 @@ set mat=2
 set laststatus=2
 
 " Highlight the screen line of the cursor
-set cursorline
+"set cursorline
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
@@ -162,9 +162,15 @@ map <leader>wq :close<cr>
 map <leader>wo :only<cr>
 
 " Close the preview window automatically
-set previewheight=5
+" set previewheight=5
 autocmd CompleteDone * pclose
-set nopreviewwindow
+" set nopreviewwindow
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Edit and source vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <silent> <leader>ee :e ~/.vimrc<cr>
+map <silent> <leader>ss :source ~/.vimrc<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope and tag settings
@@ -225,6 +231,17 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "let g:ycm_show_diagnostics_ui = 0 "work with syntastic
+if !exists("g:ycm_semantic_triggers")
+      let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Typescript
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:typescript_indent_disable = 1
+autocmd FileType typescript :set makeprg=tsc
+
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
@@ -253,7 +270,8 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme='solarized'
+" let g:airline_theme='solarized'
+let g:airline_theme='dark'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp ignore settings
@@ -281,20 +299,25 @@ Plugin 'kien/ctrlp.vim' "instead of lookupfile
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'majutsushi/tagbar' "instead of taglist
 
-" Programs moveing and editing
+" moveing and editing
 Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
+Plugin 'Raimondi/delimitMate'
 
 " Programs check
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
+Plugin 'leafgarland/typescript-vim'
 
 " Color schemes
 Plugin 'altercation/vim-colors-solarized'
+
+" Compile
+Plugin 'skywind3000/asyncrun.vim'
 
 " Others
 Plugin 'christoomey/vim-tmux-navigator'
@@ -311,12 +334,11 @@ filetype plugin indent on    " required
 " Enable syntax highlighting
 syntax enable 
 
-set t_Co=256
-set background=dark
-colorscheme solarized
-
 " Set extra options when running in GUI mode
 if has("gui_running")
+    set t_Co=256
+    set background=dark
+    colorscheme solarized
     set guioptions-=T
     set guioptions-=m       "close menu of gvim
 endif
@@ -334,8 +356,10 @@ set termencoding=utf-8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-ab abpy #! /usr/bin/env python<cr>
+ab abpy #! /usr/bin/env python<cr># -*- coding: utf-8 -*-<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tests
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" run python programs
+noremap <F5> :AsyncRun python %<cr>
