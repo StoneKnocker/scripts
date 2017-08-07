@@ -1,8 +1,8 @@
-## Young's scripts
+# Young's scripts
 
 This repository contains some files shared by Young Lu.
 
-### Contents
+## Contents
 
 * [UltiSnips] --- snippet files created by Young.
 * [.Xresources] --- xterm config.
@@ -11,9 +11,9 @@ This repository contains some files shared by Young Lu.
 * [.vimrc] --- vim script.
 * [.ycm_extra_conf.py] --- youcompleteme plugin config.
 
-### vimrc usage
+## vimrc usage
 * Download scripts first.  
-git clone https://github.com/ruchee/vimrc
+git clone https://github.com/progyoung/vimrc
 * Copy .vimrc file to your home directory.  
 cp scripts/.vimrc ~/.vimrc
 * Then add bundle.vim  
