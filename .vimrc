@@ -67,7 +67,8 @@ set mat=2
 set laststatus=2
 
 " Highlight the screen line of the cursor
-"set cursorline
+" set cursorline
+hi CursorLine cterm=NONE ctermbg=234 ctermfg=NONE
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
@@ -197,6 +198,8 @@ nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 set tags=./tags,./TAGS,tags,TAGS
+nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/create_cscope_file.sh'])<cr>
+nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/create_tag_file.sh'])<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mark settings(highlight the word under the cursor)
@@ -278,7 +281,7 @@ let g:airline_theme='dark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|svn)$',
-    \ 'file': '\v\.(exe|so|dll|pyc|o)$',
+    \ 'file': '\v\.(exe|so|dll|pyc|o|js|html|jhtml)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
@@ -311,7 +314,7 @@ Plugin 'Raimondi/delimitMate'
 " Programs check
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'shawncplus/phpcomplete.vim'
 
 " Color schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -335,13 +338,13 @@ filetype plugin indent on    " required
 syntax enable 
 
 " Set extra options when running in GUI mode
-if has("gui_running")
+" if has("gui_running")
     set t_Co=256
     set background=dark
-    colorscheme solarized
-    set guioptions-=T
-    set guioptions-=m       "close menu of gvim
-endif
+    colorscheme default
+    " set guioptions-=T
+    " set guioptions-=m       "close menu of gvim
+" endif
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
