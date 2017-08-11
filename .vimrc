@@ -75,6 +75,10 @@ set nobackup
 set nowb
 set noswapfile
 
+" Auto read and write
+set autoread
+set autowriteall
+
 " Format the status line
 "set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \-\-\%P\-\-\ \ Position:\ %l\,\ %c
 
@@ -172,6 +176,8 @@ autocmd CompleteDone * pclose
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <silent> <leader>ee :e ~/.vimrc<cr>
 map <silent> <leader>ss :source ~/.vimrc<cr>
+map <leader>ws :mksession! session.vim<cr>
+map <leader>wi :wviminfo! info.vim<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope and tag settings
@@ -198,8 +204,8 @@ nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 set tags=./tags,./TAGS,tags,TAGS
-nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/create_cscope_file.sh'])<cr>
-nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/create_tag_file.sh'])<cr>
+nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_cscope_file.sh'])<cr>
+nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_tag_file.sh'])<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mark settings(highlight the word under the cursor)
@@ -225,26 +231,19 @@ nmap <silent> <c-l> :TmuxNavigateRight<cr>
 " YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_cache_omnifunc = 0
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"let g:ycm_show_diagnostics_ui = 0 "work with syntastic
-if !exists("g:ycm_semantic_triggers")
-      let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Typescript
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:typescript_indent_disable = 1
-autocmd FileType typescript :set makeprg=tsc
-
+" let g:ycm_collect_identifiers_from_tags_files = 1
+" let g:ycm_min_num_of_chars_for_completion = 2
+" let g:ycm_cache_omnifunc = 0
+" let g:ycm_seed_identifiers_with_syntax = 1
+" let g:ycm_complete_in_comments = 1
+" let g:ycm_complete_in_strings = 1
+" let g:ycm_confirm_extra_conf = 0
+" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+" "let g:ycm_show_diagnostics_ui = 0 "work with syntastic
+" if !exists("g:ycm_semantic_triggers")
+      " let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers['typescript'] = ['.']
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
@@ -277,11 +276,13 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:airline_theme='dark'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrlp ignore settings
+" Ctrlp settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_regexp = 1
+let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|svn)$',
-    \ 'file': '\v\.(exe|so|dll|pyc|o|js|html|jhtml)$',
+    \ 'file': '\v\.(exe|so|dll|pyc|o|js|html|phtml)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
@@ -319,9 +320,6 @@ Plugin 'shawncplus/phpcomplete.vim'
 " Color schemes
 Plugin 'altercation/vim-colors-solarized'
 
-" Compile
-Plugin 'skywind3000/asyncrun.vim'
-
 " Others
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-airline/vim-airline'
@@ -341,7 +339,7 @@ syntax enable
 " if has("gui_running")
     set t_Co=256
     set background=dark
-    colorscheme default
+    colorscheme desert
     " set guioptions-=T
     " set guioptions-=m       "close menu of gvim
 " endif
@@ -356,13 +354,3 @@ set encoding=utf-8
 set fileencodings=gb2312,utf-8
 set termencoding=utf-8
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" abbreviation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-ab abpy #! /usr/bin/env python<cr># -*- coding: utf-8 -*-<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tests
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" run python programs
-noremap <F5> :AsyncRun python %<cr>
