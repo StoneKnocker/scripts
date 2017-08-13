@@ -167,9 +167,9 @@ map <leader>wq :close<cr>
 map <leader>wo :only<cr>
 
 " Close the preview window automatically
-" set previewheight=5
+set previewheight=5
 autocmd CompleteDone * pclose
-" set nopreviewwindow
+set nopreviewwindow
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Edit and source vimrc
@@ -231,22 +231,32 @@ nmap <silent> <c-l> :TmuxNavigateRight<cr>
 " YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-" let g:ycm_collect_identifiers_from_tags_files = 1
-" let g:ycm_min_num_of_chars_for_completion = 2
-" let g:ycm_cache_omnifunc = 0
-" let g:ycm_seed_identifiers_with_syntax = 1
-" let g:ycm_complete_in_comments = 1
-" let g:ycm_complete_in_strings = 1
-" let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_cache_omnifunc = 0
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_confirm_extra_conf = 0
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-" "let g:ycm_show_diagnostics_ui = 0 "work with syntastic
-" if !exists("g:ycm_semantic_triggers")
-      " let g:ycm_semantic_triggers = {}
-" endif
-" let g:ycm_semantic_triggers['typescript'] = ['.']
+"let g:ycm_show_diagnostics_ui = 0 "work with syntastic
+if !exists("g:ycm_semantic_triggers")
+      let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Neocomplete settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 2
+
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType php set completefunc=phpcomplete#CompletePHP
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic settings
@@ -264,10 +274,10 @@ nmap <leader>st :SyntasticToggleMode<cr>
 " Ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsListSnippets="<c-tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigge="<c-k>"
-"inoremap <c-x><c-k> <c-x><c-k>
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigge="<c-k>"
+inoremap <c-x><c-k> <c-x><c-k>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline theme
@@ -308,13 +318,14 @@ Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
 " Plugin 'SirVer/ultisnips'
 " Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/delimitMate'
 
 " Programs check
 Plugin 'scrooloose/syntastic'
-Plugin 'nvie/vim-flake8'
+" Plugin 'nvie/vim-flake8'
 Plugin 'shawncplus/phpcomplete.vim'
 
 " Color schemes
