@@ -143,6 +143,20 @@ let g:miniBufExplBRSplit = 0
 map <silent><leader>bl :MBEToggle<cr>
 map <silent><leader>bn :MBEbn<cr>
 map <silent><leader>bp :MBEbp<cr>
+map <silent><leader>bdo :BcloseOthers<cr>
+
+command! BcloseOthers call <SID>BufCloseOthers()  
+function! <SID>BufCloseOthers()  
+   let l:currentBufNum   = bufnr("%")  
+   let l:alternateBufNum = bufnr("#")  
+   for i in range(1,bufnr("$"))  
+     if buflisted(i)  
+       if i!=l:currentBufNum  
+         execute("bdelete ".i)  
+       endif  
+     endif  
+   endfor  
+endfunction  
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Settings about page tabs, windows and buffers
@@ -318,7 +332,7 @@ Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
 " Plugin 'SirVer/ultisnips'
 " Plugin 'Valloric/YouCompleteMe'
-Plugin 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neocomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'Raimondi/delimitMate'
