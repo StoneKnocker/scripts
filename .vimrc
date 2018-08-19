@@ -19,8 +19,7 @@ filetype indent on
 set autoread
 autocmd CursorHold * checktime
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+set so=2
 
 " Show line number
 set nu
@@ -63,14 +62,11 @@ set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
-" Always show the status line
-set laststatus=2
-
 " Highlight the screen line of the cursor
-" set cursorline
+set cursorline
 hi CursorLine cterm=NONE ctermbg=234 ctermfg=NONE
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
 set nowb
 set noswapfile
@@ -78,9 +74,6 @@ set noswapfile
 " Auto read and write
 set autoread
 set autowriteall
-
-" Format the status line
-"set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \-\-\%P\-\-\ \ Position:\ %l\,\ %c
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
@@ -106,8 +99,8 @@ set shiftwidth=4 " indent 4 spaces
 set softtabstop=4 "<BS> del 4 spaces
 
 " Linebreak on 79 characters
-set linebreak
-set textwidth=79
+" set linebreak
+" set textwidth=79
 
 set ai "Auto indent
 set si "Smart indent
@@ -218,8 +211,8 @@ nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 set tags=./tags,./TAGS,tags,TAGS
-nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_cscope_file.sh'])<cr>
-nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_tag_file.sh'])<cr>
+" nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_cscope_file.sh'])<cr>
+" nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_tag_file.sh'])<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mark settings(highlight the word under the cursor)
@@ -245,19 +238,11 @@ nmap <silent> <c-l> :TmuxNavigateRight<cr>
 " YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_cache_omnifunc = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
 let g:ycm_confirm_extra_conf = 0
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"let g:ycm_show_diagnostics_ui = 0 "work with syntastic
-if !exists("g:ycm_semantic_triggers")
-      let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
@@ -273,22 +258,9 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType php set completefunc=phpcomplete#CompletePHP
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Syntastic settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-nmap <leader>st :SyntasticToggleMode<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigge="<c-k>"
 inoremap <c-x><c-k> <c-x><c-k>
@@ -296,7 +268,6 @@ inoremap <c-x><c-k> <c-x><c-k>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:airline_theme='solarized'
 let g:airline_theme='dark'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -330,20 +301,19 @@ Plugin 'majutsushi/tagbar' "instead of taglist
 " moveing and editing
 Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
-" Plugin 'SirVer/ultisnips'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim'
+Plugin 'SirVer/ultisnips'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-Plugin 'Raimondi/delimitMate'
+" Plugin 'Raimondi/delimitMate'
 
-" Programs check
-Plugin 'scrooloose/syntastic'
+" Programs
 " Plugin 'nvie/vim-flake8'
-Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'fatih/vim-go'
 
 " Color schemes
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 
 " Others
 Plugin 'christoomey/vim-tmux-navigator'
@@ -364,18 +334,34 @@ syntax enable
 " if has("gui_running")
     set t_Co=256
     set background=dark
-    colorscheme desert
+    " colorscheme desert
     " set guioptions-=T
     " set guioptions-=m       "close menu of gvim
 " endif
 
 " Use Unix as the standard file type
-set ffs=unix,dos,mac
+set ffs=unix,mac,dos
 
 " Set utf8 as standard encoding
 set encoding=utf-8
-
-" Filecodings
 set fileencodings=gb2312,utf-8
 set termencoding=utf-8
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Programs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Automatic completion
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap " ""<left>
+inoremap ' ''<left>
+
+" Golang
+let g:go_fmt_command = "goimports"
+let g:go_def_mode = 'godef'
+let g:go_auto_sameids = 1
+
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
