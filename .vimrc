@@ -94,7 +94,7 @@ endif
 " Be smart when indenting
 set smarttab
 
-set tabstop=4 " 1 tab == 4 spaces
+set tabstop=4 " 1 tab = 4 spaces
 set shiftwidth=4 " indent 4 spaces
 set softtabstop=4 "<BS> del 4 spaces
 
@@ -137,6 +137,7 @@ map <silent><leader>bl :MBEToggle<cr>
 map <silent><leader>bn :MBEbn<cr>
 map <silent><leader>bp :MBEbp<cr>
 map <silent><leader>bdo :BcloseOthers<cr>
+map <leader>bu :buffer 
 
 command! BcloseOthers call <SID>BufCloseOthers()  
 function! <SID>BufCloseOthers()  
@@ -155,7 +156,7 @@ endfunction
 " Settings about page tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a draft tab
-map <silent> <leader>dt :tabnew<cr>:setl buftype=nofile<cr> 
+map <silent> <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenumber<cr> 
 
 " Disable highlight when <leader><leader> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -165,6 +166,7 @@ map <leader>ww :w<cr>
 map <leader>qq :q<cr>
 
 " Useful mappings for managing tabs and windows
+map <leader>tm :terminal<cr>
 map <leader>te :tabedit 
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprevious<cr>
@@ -176,7 +178,7 @@ map <leader>wo :only<cr>
 " Close the preview window automatically
 set previewheight=5
 autocmd CompleteDone * pclose
-set nopreviewwindow
+set completeopt-=preview
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Edit and source vimrc
@@ -185,44 +187,6 @@ map <silent> <leader>ee :e ~/.vimrc<cr>
 map <silent> <leader>ss :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>
 map <leader>wi :wviminfo! info.vim<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Cscope and tag settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
- if has("cscope")
-    set csprg=/usr/bin/cscope
-    set csto=1
-    set cst
-    set nocsverb
-    " add any database in current directory
-    if filereadable("cscope.out")
-    cs add cscope.out
-    endif
-    set csverb
-endif
-
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-set tags=./tags,./TAGS,tags,TAGS
-" nmap <leader>gc :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_cscope_file.sh'])<cr>
-" nmap <leader>gt :call job_start(['/bin/bash','-c', '/home/maque/sbin/create_tag_file.sh'])<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Mark settings(highlight the word under the cursor)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>hl <Plug>MarkSet
-vmap <silent> <leader>hl <Plug>MarkSet
-nmap <silent> <leader>hc <Plug>MarkClear
-vmap <silent> <leader>hc <Plug>MarkClear
-nmap <silent> <leader>hr <Plug>MarkRegex
-vmap <silent> <leader>hr <Plug>MarkRegex
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tmux settings
@@ -242,20 +206,11 @@ let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 0
+" let g:ycm_key_invoke_completion = '<C-j>'
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Neocomplete settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 2
-
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType php set completefunc=phpcomplete#CompletePHP
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ultisnips
@@ -269,6 +224,21 @@ inoremap <c-x><c-k> <c-x><c-k>
 " Airline theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme='dark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>h <Plug>AirlineSelectPrevTab
+nmap <leader>l <Plug>AirlineSelectNextTab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp settings
@@ -299,16 +269,16 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'majutsushi/tagbar' "instead of taglist
 
 " moveing and editing
-Plugin 'mbriggs/mark.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 " Plugin 'Raimondi/delimitMate'
 
 " Programs
 " Plugin 'nvie/vim-flake8'
-" Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'lvht/phpcd.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'fatih/vim-go'
 
@@ -329,39 +299,26 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable 
-
-" Set extra options when running in GUI mode
-" if has("gui_running")
-    set t_Co=256
-    set background=dark
-    " colorscheme desert
-    " set guioptions-=T
-    " set guioptions-=m       "close menu of gvim
-" endif
+set t_Co=256
+set background=dark
 
 " Use Unix as the standard file type
 set ffs=unix,mac,dos
 
 " Set utf8 as standard encoding
 set encoding=utf-8
-set fileencodings=gb2312,utf-8
+set fileencodings=utf-8
 set termencoding=utf-8
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Programs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Automatic completion
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap " ""<left>
-inoremap ' ''<left>
-
-" Golang
+" go
 let g:go_fmt_command = "goimports"
 let g:go_def_mode = 'godef'
+let g:go_list_type = "quickfix"
 let g:go_auto_sameids = 1
+map <leader>gi :GoImport 
 
-autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+" php
+autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
