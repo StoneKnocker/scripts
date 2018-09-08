@@ -1,8 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Young's vimrc in linux
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Get out of VI's compatible mode
@@ -10,10 +6,6 @@ set nocompatible
 
 " Sets how many lines of history VIM has to remember
 set history=100
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -114,30 +106,17 @@ let mapleader = ","
 let g:mapleader = ","
 
 " Filelist
-map <silent> <leader>fl :NERDTreeToggle<cr>
+map <leader>fl :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pyc$', '\.vim$']
 
 " Tagbar settings
 let g:tagbar_autofocus = 1
 let NERDSpaceDelims = 1
 let g:tagbar_sort = 0
-nmap <silent><leader>tl :TagbarToggle<cr>
+nmap <leader>tl :TagbarToggle<cr>
 
-" Minibufferexpl
-let g:miniBufExplorerAutoStart = 0
-let g:miniBufExplMapWindowNavVim    = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs  = 1
-let g:miniBufExplModSelTarget       = 1
-let g:miniBufExplForceSyntaxEnable = 1
-let g:miniBufExplorerMoreThanOne=2
-let g:miniBufExplCycleArround=1
-let g:miniBufExplBRSplit = 0
-map <silent><leader>bl :MBEToggle<cr>
-map <silent><leader>bn :MBEbn<cr>
-map <silent><leader>bp :MBEbp<cr>
-map <silent><leader>bdo :BcloseOthers<cr>
-map <leader>bu :buffer 
+map <leader>bdo :BcloseOthers<cr>
+map <leader>bw :bw<cr>
 
 command! BcloseOthers call <SID>BufCloseOthers()  
 function! <SID>BufCloseOthers()  
@@ -156,10 +135,10 @@ endfunction
 " Settings about page tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a draft tab
-map <silent> <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenumber<cr> 
+map <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenumber<cr> 
 
 " Disable highlight when <leader><leader> is pressed
-map <silent> <leader><cr> :noh<cr>
+map <leader><cr> :noh<cr>
 
 " Fast saving or leaving
 map <leader>ww :w<cr>
@@ -183,8 +162,8 @@ set completeopt-=preview
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Edit and source vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <silent> <leader>ee :e ~/.vimrc<cr>
-map <silent> <leader>ss :source ~/.vimrc<cr>
+map <leader>ee :e ~/.vimrc<cr>
+map <leader>ss :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>
 map <leader>wi :wviminfo! info.vim<cr>
 
@@ -193,10 +172,10 @@ map <leader>wi :wviminfo! info.vim<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tmux_navigator_no_mappings = 1
 
-nmap <silent> <c-h> :TmuxNavigateLeft<cr>
-nmap <silent> <c-j> :TmuxNavigateDown<cr>
-nmap <silent> <c-k> :TmuxNavigateUp<cr>
-nmap <silent> <c-l> :TmuxNavigateRight<cr>
+nmap <c-h> :TmuxNavigateLeft<cr>
+nmap <c-j> :TmuxNavigateDown<cr>
+nmap <c-k> :TmuxNavigateUp<cr>
+nmap <c-l> :TmuxNavigateRight<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
@@ -221,7 +200,7 @@ let g:UltiSnipsJumpBackwardTrigge="<c-k>"
 inoremap <c-x><c-k> <c-x><c-k>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Airline theme
+" Airline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme='dark'
 let g:airline#extensions#tabline#enabled = 1
@@ -241,7 +220,7 @@ nmap <leader>h <Plug>AirlineSelectPrevTab
 nmap <leader>l <Plug>AirlineSelectNextTab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrlp settings
+" Ctrlp
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_regexp = 1
 let g:ctrlp_working_path_mode = 0
@@ -264,9 +243,8 @@ Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 
 " File manage
 Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim' "instead of lookupfile
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'majutsushi/tagbar' "instead of taglist
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
 
 " moveing and editing
 Plugin 'easymotion/vim-easymotion'
@@ -274,10 +252,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
-" Plugin 'Raimondi/delimitMate'
 
 " Programs
-" Plugin 'nvie/vim-flake8'
 Plugin 'lvht/phpcd.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'fatih/vim-go'
