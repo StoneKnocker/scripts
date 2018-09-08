@@ -1,8 +1,61 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
+
+" File manage
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+
+" moveing and editing
+Plugin 'easymotion/vim-easymotion'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-surround'
+
+" Programs
+Plugin 'lvht/phpcd.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'fatih/vim-go'
+
+" Color schemes
+" Plugin 'altercation/vim-colors-solarized'
+
+" Others
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Get out of VI's compatible mode
 set nocompatible
+
+" Enable syntax highlighting
+syntax enable 
+set t_Co=256
+set background=dark
+
+" Use Unix as the standard file type
+set ffs=unix,mac,dos
+
+" Set utf8 as standard encoding
+set encoding=utf-8
+set fileencodings=utf-8
+set termencoding=utf-8
 
 " Sets how many lines of history VIM has to remember
 set history=100
@@ -32,9 +85,6 @@ set whichwrap+=<,>,h,l
 
 " Ignore case when searching
 set ignorecase
-
-" When searching try to be smart about cases 
-"set smartcase
 
 " Highlight search results
 set hlsearch
@@ -115,8 +165,8 @@ let NERDSpaceDelims = 1
 let g:tagbar_sort = 0
 nmap <leader>tl :TagbarToggle<cr>
 
-map <leader>bdo :BcloseOthers<cr>
 map <leader>bw :bw<cr>
+map <leader>bdo :BcloseOthers<cr>
 
 command! BcloseOthers call <SID>BufCloseOthers()  
 function! <SID>BufCloseOthers()  
@@ -131,9 +181,6 @@ function! <SID>BufCloseOthers()
    endfor  
 endfunction  
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Settings about page tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a draft tab
 map <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenumber<cr> 
 
@@ -159,17 +206,16 @@ set previewheight=5
 autocmd CompleteDone * pclose
 set completeopt-=preview
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Edit and source vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" dit and source vimrc
 map <leader>ee :e ~/.vimrc<cr>
 map <leader>ss :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>
 map <leader>wi :wviminfo! info.vim<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tmux settings
+" plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tmux settings
 let g:tmux_navigator_no_mappings = 1
 
 nmap <c-h> :TmuxNavigateLeft<cr>
@@ -177,9 +223,7 @@ nmap <c-j> :TmuxNavigateDown<cr>
 nmap <c-k> :TmuxNavigateUp<cr>
 nmap <c-l> :TmuxNavigateRight<cr>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -191,17 +235,13 @@ let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ultisnips
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigge="<c-k>"
 inoremap <c-x><c-k> <c-x><c-k>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme='dark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
@@ -219,9 +259,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>h <Plug>AirlineSelectPrevTab
 nmap <leader>l <Plug>AirlineSelectNextTab
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_regexp = 1
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = {
@@ -229,62 +267,6 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll|pyc|o|js|html|phtml)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-
-" File manage
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
-
-" moveing and editing
-Plugin 'easymotion/vim-easymotion'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-surround'
-
-" Programs
-Plugin 'lvht/phpcd.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'fatih/vim-go'
-
-" Color schemes
-" Plugin 'altercation/vim-colors-solarized'
-
-" Others
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-set t_Co=256
-set background=dark
-
-" Use Unix as the standard file type
-set ffs=unix,mac,dos
-
-" Set utf8 as standard encoding
-set encoding=utf-8
-set fileencodings=utf-8
-set termencoding=utf-8
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Programs
