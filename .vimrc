@@ -1,42 +1,34 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle settings
+" plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-
+call plug#begin()
 " File manage
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
 
 " moveing and editing
-Plugin 'easymotion/vim-easymotion'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
 
 " Programs
-Plugin 'lvht/phpcd.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'fatih/vim-go'
+Plug 'lvht/phpcd.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'fatih/vim-go'
+Plug 'jiangmiao/auto-pairs'
 
 " Color schemes
-" Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 " Others
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General settings
@@ -44,25 +36,24 @@ filetype plugin indent on    " required
 " Get out of VI's compatible mode
 set nocompatible
 
+filetype plugin indent on
+
 " Enable syntax highlighting
 syntax enable 
 set t_Co=256
 set background=dark
+colorscheme solarized
 
 " Use Unix as the standard file type
 set ffs=unix,mac,dos
 
 " Set utf8 as standard encoding
 set encoding=utf-8
-set fileencodings=utf-8
+set fileencodings=utf-8,chinese
 set termencoding=utf-8
 
 " Sets how many lines of history VIM has to remember
 set history=100
-
-" Set to auto read when a file is changed from the outside
-set autoread
-autocmd CursorHold * checktime
 
 set so=2
 
@@ -157,7 +148,7 @@ let g:mapleader = ","
 
 " Filelist
 map <leader>fl :NERDTreeToggle<cr>
-let NERDTreeIgnore = ['\.pyc$', '\.vim$']
+let NERDTreeIgnore = ['\.pyc$', '\.o$']
 
 " Tagbar settings
 let g:tagbar_autofocus = 1
