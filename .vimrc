@@ -148,7 +148,7 @@ let g:mapleader = ","
 
 " Filelist
 map <leader>fl :NERDTreeToggle<cr>
-let NERDTreeIgnore = ['\.pyc$', '\.o$']
+let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.class$']
 
 " Tagbar settings
 let g:tagbar_autofocus = 1
@@ -179,7 +179,7 @@ map <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenu
 map <leader><cr> :noh<cr>
 
 " Fast saving or leaving
-map <leader>ww :w<cr>
+map <leader>s :w<cr>
 map <leader>qq :q<cr>
 
 " Useful mappings for managing tabs and windows
@@ -199,7 +199,7 @@ set completeopt-=preview
 
 " dit and source vimrc
 map <leader>ee :e ~/.vimrc<cr>
-map <leader>ss :source ~/.vimrc<cr>
+map <leader>es :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>
 map <leader>wi :wviminfo! info.vim<cr>
 
@@ -222,9 +222,6 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 0
 " let g:ycm_key_invoke_completion = '<C-j>'
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-
-nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToReferences<CR>
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -255,7 +252,7 @@ let g:ctrlp_regexp = 1
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|svn)$',
-    \ 'file': '\v\.(exe|so|dll|pyc|o|js|html|phtml)$',
+    \ 'file': '\v\.(exe|so|dll|pyc|o|class)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
