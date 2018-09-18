@@ -180,7 +180,6 @@ map <leader><cr> :noh<cr>
 
 " Fast saving or leaving
 map <leader>s :w<cr>
-map <leader>qq :q<cr>
 
 " Useful mappings for managing tabs and windows
 map <leader>tm :terminal<cr>
@@ -200,34 +199,28 @@ set completeopt-=preview
 " dit and source vimrc
 map <leader>ee :e ~/.vimrc<cr>
 map <leader>es :source ~/.vimrc<cr>
-map <leader>ws :mksession! session.vim<cr>
-map <leader>wi :wviminfo! info.vim<cr>
+map <leader>ws :mksession! session.vim<cr>:wviminfo! info.vim<cr>
+map <leader>rs :source session.vim<cr>:rviminfo info.vim<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tmux settings
 let g:tmux_navigator_no_mappings = 1
-
 nmap <c-h> :TmuxNavigateLeft<cr>
 nmap <c-j> :TmuxNavigateDown<cr>
 nmap <c-k> :TmuxNavigateUp<cr>
 nmap <c-l> :TmuxNavigateRight<cr>
 
 " YouCompleteMe
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 0
-" let g:ycm_key_invoke_completion = '<C-j>'
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigge="<c-k>"
-inoremap <c-x><c-k> <c-x><c-k>
 
 " Airline
 let g:airline_theme='dark'
@@ -263,7 +256,7 @@ let g:ctrlp_custom_ignore = {
 let g:go_fmt_command = "goimports"
 let g:go_def_mode = 'godef'
 let g:go_list_type = "quickfix"
-let g:go_auto_sameids = 1
+" let g:go_auto_sameids = 1
 map <leader>gi :GoImport 
 
 " php
