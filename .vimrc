@@ -19,6 +19,10 @@ Plug 'lvht/phpcd.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
+Plug 'vim-syntastic/syntastic'
+
+" Frontend
+Plug 'mattn/emmet-vim'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
@@ -182,7 +186,6 @@ map <leader><cr> :noh<cr>
 map <leader>s :w<cr>
 
 " Useful mappings for managing tabs and windows
-map <leader>tm :terminal<cr>
 map <leader>te :tabedit 
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprevious<cr>
@@ -252,12 +255,21 @@ let g:ctrlp_custom_ignore = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Programs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" common
+map <leader>tm :terminal<cr>
+map <leader>cn :cnext<cr>
+map <leader>cp :cprevious<cr>
+
 " go
 let g:go_fmt_command = "goimports"
 let g:go_def_mode = 'godef'
 let g:go_list_type = "quickfix"
-" let g:go_auto_sameids = 1
+"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 map <leader>gi :GoImport 
 
 " php
 autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
+
+" frontend
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
