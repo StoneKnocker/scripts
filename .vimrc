@@ -23,6 +23,7 @@ Plug 'vim-syntastic/syntastic'
 
 " Frontend
 Plug 'mattn/emmet-vim'
+Plug 'ap/vim-css-color'
 
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
