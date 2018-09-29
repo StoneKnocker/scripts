@@ -162,10 +162,10 @@ let g:tagbar_sort = 0
 nmap <leader>tl :TagbarToggle<cr>
 
 map <leader>bw :bw<cr>
-map <leader>bdo :BcloseOthers<cr>
+map <leader>bo :BufOnly<cr>
 
 command! BcloseOthers call <SID>BufCloseOthers()  
-function! <SID>BufCloseOthers()  
+function! <SID>BufOnly()  
    let l:currentBufNum   = bufnr("%")  
    let l:alternateBufNum = bufnr("#")  
    for i in range(1,bufnr("$"))  
