@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plugin settings
+" vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 " File manage
@@ -15,7 +15,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 
 " Programs
-Plug 'lvht/phpcd.vim'
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
@@ -119,6 +119,11 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
+" Close the preview window automatically
+set previewheight=5
+autocmd CompleteDone * pclose
+set completeopt-=preview
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -151,16 +156,6 @@ set wrap "Wrap lines
 let mapleader = ","
 let g:mapleader = ","
 
-" Filelist
-map <leader>fl :NERDTreeToggle<cr>
-let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.class$']
-
-" Tagbar settings
-let g:tagbar_autofocus = 1
-let NERDSpaceDelims = 1
-let g:tagbar_sort = 0
-nmap <leader>tl :TagbarToggle<cr>
-
 map <leader>bw :bw<cr>
 map <leader>bo :BufOnly<cr>
 
@@ -180,27 +175,13 @@ endfunction
 " Open a draft tab
 map <leader>dt :tabnew<cr>:setl buftype=nofile<cr>:set nonu<cr>:set norelativenumber<cr> 
 
-" Disable highlight when <leader><leader> is pressed
 map <leader><cr> :noh<cr>
 
-" Fast saving or leaving
 map <leader>s :w<cr>
-
-" Useful mappings for managing tabs and windows
-map <leader>te :tabedit 
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
 map <leader>wq :close<cr>
 map <leader>wo :only<cr>
 
-" Close the preview window automatically
-set previewheight=5
-autocmd CompleteDone * pclose
-set completeopt-=preview
-
-" dit and source vimrc
+" edit and source vimrc
 map <leader>ee :e ~/.vimrc<cr>
 map <leader>es :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>:wviminfo! info.vim<cr>
@@ -253,13 +234,19 @@ let g:ctrlp_custom_ignore = {
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Programs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" common
-map <leader>tm :terminal<cr>
-map <leader>cn :cnext<cr>
-map <leader>cp :cprevious<cr>
+" Filelist
+map <leader>fl :NERDTreeToggle<cr>
+let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.class$']
+
+" Tagbar settings
+let g:tagbar_autofocus = 1
+let NERDSpaceDelims = 1
+let g:tagbar_sort = 0
+nmap <leader>tl :TagbarToggle<cr>
+
+" terminal
+" set splitright
+map <leader>tm :vertical terminal<cr>
 
 " go
 let g:go_fmt_command = "goimports"
@@ -269,7 +256,10 @@ let g:go_list_type = "quickfix"
 map <leader>gi :GoImport 
 
 " php
-autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+autocmd FileType php setlocal completefunc=phpactor#Complete
+let g:phpactorBranch = "develop"
+let g:phpactorOmniError = v:true
 
 " frontend
 let g:user_emmet_install_global = 0
