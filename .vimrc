@@ -14,24 +14,24 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 
-" Programs
+" Programmer
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-syntastic/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree'
 
 " Frontend
 Plug 'mattn/emmet-vim'
 Plug 'ap/vim-css-color'
 
-" Color schemes
-Plug 'altercation/vim-colors-solarized'
-
-" Others
+" Navigator
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
 
@@ -128,7 +128,7 @@ set completeopt-=preview
 " Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs except in makefiles
-if &filetype != "make"
+if &filetype != 'make'
     set expandtab
 else
     set noexpandtab
@@ -156,19 +156,22 @@ set wrap "Wrap lines
 let mapleader = ","
 let g:mapleader = ","
 
-map <leader>bw :bw<cr>
+map <leader>bw :bw!<cr>
 map <leader>bo :BufOnly<cr>
 
 command! BufOnly call <SID>BufOnly()  
 function! <SID>BufOnly()  
-   let l:currentBufNum   = bufnr("%")  
-   let l:alternateBufNum = bufnr("#")  
-   for i in range(1,bufnr("$"))  
-     if buflisted(i)  
-       if i!=l:currentBufNum  
-         execute("bdelete ".i)  
+   let l:currentBufNum   = bufnr('%')  
+   let l:alternateBufNum = bufnr('#')  
+   for i in range(1,bufnr('$'))  
+       if bufname(i)[0] == '!'
+           continue
+       endif
+       if buflisted(i)  
+           if i!=l:currentBufNum  
+               execute('bdelete '.i)  
+           endif  
        endif  
-     endif  
    endfor  
 endfunction  
 
@@ -208,6 +211,7 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:UltiSnipsExpandTrigger="<c-j>"
 
 " Airline
+let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline_theme='dark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
@@ -245,22 +249,24 @@ let g:tagbar_sort = 0
 nmap <leader>tl :TagbarToggle<cr>
 
 " terminal
-" set splitright
+set splitright
 map <leader>tm :vertical terminal<cr>
+tmap <c-j> <c-w>N
 
 " go
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 let g:go_def_mode = 'godef'
-let g:go_list_type = "quickfix"
+let g:go_list_type = 'quickfix'
 "let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 map <leader>gi :GoImport 
 
 " php
 autocmd FileType php setlocal omnifunc=phpactor#Complete
 autocmd FileType php setlocal completefunc=phpactor#Complete
-let g:phpactorBranch = "develop"
+let g:phpactorBranch = 'develop'
 let g:phpactorOmniError = v:true
 
 " frontend
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
