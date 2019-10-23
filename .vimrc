@@ -15,8 +15,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 
 " Programmer
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
-Plug 'Valloric/YouCompleteMe'
+"Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+"Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-syntastic/syntastic'
@@ -24,8 +24,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 
 " Frontend
-Plug 'mattn/emmet-vim'
-Plug 'ap/vim-css-color'
+"Plug 'mattn/emmet-vim'
+"Plug 'ap/vim-css-color'
 
 " Navigator
 Plug 'christoomey/vim-tmux-navigator'
@@ -190,6 +190,9 @@ map <leader>es :source ~/.vimrc<cr>
 map <leader>ws :mksession! session.vim<cr>:wviminfo! info.vim<cr>
 map <leader>rs :source session.vim<cr>:rviminfo info.vim<cr>
 
+map <leader>ps :set paste<cr>
+map <leader>pc :set nopaste<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -257,16 +260,9 @@ tmap <c-j> <c-w>N
 let g:go_fmt_command = 'goimports'
 let g:go_def_mode = 'godef'
 let g:go_list_type = 'quickfix'
-"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
 map <leader>gi :GoImport 
-
-" php
-autocmd FileType php setlocal omnifunc=phpactor#Complete
-autocmd FileType php setlocal completefunc=phpactor#Complete
-let g:phpactorBranch = 'develop'
-let g:phpactorOmniError = v:true
-
-" frontend
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+map <leader>gr :GoRun<cr>
 
