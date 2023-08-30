@@ -10,5 +10,5 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- HopWord
-vim.api.nvim_set_keymap('', '<Leader>w', ":HopWord<cr>", {silent = true, noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>o', ":only<cr>", {silent = true, noremap = true})
+vim.api.nvim_set_keymap("", ",em", ":HopWord<cr>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", ",wo", ":only<cr>", { silent = true, noremap = true })
