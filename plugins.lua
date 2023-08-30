@@ -63,6 +63,10 @@ local plugins = {
       }
     end,
   },
+  {
+    "Exafunction/codeium.vim",
+    event = "BufEnter",
+  },
 
   -- To make a plugin not be loaded
   -- {
