@@ -52,7 +52,7 @@ local plugins = {
     config = function()
       require("hop").setup {}
     end,
-    lazy = false,
+    event = "BufEnter",
   },
   {
     "mfussenegger/nvim-jdtls",
@@ -70,7 +70,7 @@ local plugins = {
   {
     "rest-nvim/rest.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    lazy = false,
+    ft = "http",
   },
 
   -- To make a plugin not be loaded
