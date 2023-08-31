@@ -4,13 +4,15 @@ local M = {}
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
 
-
 M.ui = {
   theme = "solarized_dark",
   theme_toggle = { "solarized_dark", "one_light" },
 
   hl_override = highlights.override,
   hl_add = highlights.add,
+  tabufline = {
+    show_numbers = false,
+  },
 }
 
 M.plugins = "custom.plugins"
