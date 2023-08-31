@@ -1,11 +1,3 @@
--- local autocmd = vim.api.nvim_create_autocmd
-
--- Auto resize panes when resizing nvim window
--- autocmd("VimResized", {
---   pattern = "*",
---   command = "tabdo wincmd =",
--- })
--- Setup language servers.
 vim.wo.number = true
 vim.wo.relativenumber = true
 
@@ -24,6 +16,8 @@ vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<cr>", { silent = tr
 vim.api.nvim_set_keymap("n", ",rnr", "<Plug>RestNvim", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", ",rnp", "<Plug>RestNvimPreview", { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', 'Y', 'yy', { noremap = true })
+-- outline
+vim.api.nvim_set_keymap("n", "<Leader>ol", ":SymbolsOutline<cr>", { silent = true, noremap = true })
 
 vim.cmd [[
 command! BufOnly %bd | e#

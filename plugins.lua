@@ -72,6 +72,14 @@ local plugins = {
     dependencies = { "nvim-lua/plenary.nvim" },
     ft = "http",
   },
+  {
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require("symbols-outline").setup{}
+    end,
+    opts = overrides.symbols_outline,
+    event = "BufEnter",
+  },
 
   -- To make a plugin not be loaded
   -- {
