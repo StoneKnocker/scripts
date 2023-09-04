@@ -19,6 +19,12 @@ local plugins = {
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
+      require("lspconfig").jdtls.setup {
+        cmd = { "jdtls" },
+        root_dir = function(fname)
+          return require("lspconfig").util.root_pattern("pom.xml", "gradle.build", ".git")(fname) or vim.fn.getcwd()
+        end,
+      }
     end, -- Override to setup mason-lspconfig
   },
 
@@ -54,15 +60,16 @@ local plugins = {
     end,
     event = "BufEnter",
   },
-  {
-    "mfussenegger/nvim-jdtls",
-    config = function()
-      require("jdtls").start_or_attach {
-        cmd = { "$HOME/softs/jdt-language-server/bin/jdtls" },
-        root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
-      }
-    end,
-  },
+  -- {
+  --   "mfussenegger/nvim-jdtls",
+  --   enabled = false,
+    -- config = function()
+    --   require("jdtls").start_or_attach {
+    --     cmd = { "$HOME/softs/jdt-language-server/bin/jdtls" },
+    --     root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+    --   }
+    -- end,
+  -- },
   {
     "Exafunction/codeium.vim",
     event = "BufEnter",
@@ -75,7 +82,7 @@ local plugins = {
   {
     "simrat39/symbols-outline.nvim",
     config = function()
-      require("symbols-outline").setup{}
+      require("symbols-outline").setup {}
     end,
     opts = overrides.symbols_outline,
     event = "BufEnter",

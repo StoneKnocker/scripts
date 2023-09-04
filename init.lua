@@ -15,10 +15,11 @@ vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<cr>", { silent = tr
 -- rest.vim
 vim.api.nvim_set_keymap("n", ",rnr", "<Plug>RestNvim", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", ",rnp", "<Plug>RestNvimPreview", { silent = true, noremap = true })
-vim.api.nvim_set_keymap('n', 'Y', 'yy', { noremap = true })
+vim.api.nvim_set_keymap("n", "Y", "yy", { noremap = true })
 -- outline
 vim.api.nvim_set_keymap("n", "<Leader>ol", ":SymbolsOutline<cr>", { silent = true, noremap = true })
 
 vim.cmd [[
 command! BufOnly %bd | e#
   ]]
+
