@@ -63,12 +63,12 @@ local plugins = {
   -- {
   --   "mfussenegger/nvim-jdtls",
   --   enabled = false,
-    -- config = function()
-    --   require("jdtls").start_or_attach {
-    --     cmd = { "$HOME/softs/jdt-language-server/bin/jdtls" },
-    --     root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
-    --   }
-    -- end,
+  -- config = function()
+  --   require("jdtls").start_or_attach {
+  --     cmd = { "$HOME/softs/jdt-language-server/bin/jdtls" },
+  --     root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+  --   }
+  -- end,
   -- },
   {
     "Exafunction/codeium.vim",
@@ -87,6 +87,16 @@ local plugins = {
     opts = overrides.symbols_outline,
     event = "BufEnter",
   },
+  {
+    "rmagatti/auto-session",
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      }
+    end,
+    lazy = false,
+  }
 
   -- To make a plugin not be loaded
   -- {
