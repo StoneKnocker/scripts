@@ -18,6 +18,8 @@ vim.api.nvim_set_keymap("n", ",rnp", "<Plug>RestNvimPreview", { silent = true, n
 vim.api.nvim_set_keymap("n", "Y", "yy", { noremap = true })
 -- outline
 vim.api.nvim_set_keymap("n", "<Leader>ol", ":SymbolsOutline<cr>", { silent = true, noremap = true })
+-- cancel ; to :
+vim.api.nvim_set_keymap('n', ';', '<Nop>', { noremap = true, silent = true })
 
 vim.cmd [[
 command! BufOnly %bd | e#
