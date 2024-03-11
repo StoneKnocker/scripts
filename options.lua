@@ -1,3 +1,6 @@
+require "nvchad.options"
+
+-- add yours here!
 vim.wo.number = true
 vim.wo.relativenumber = true
 
@@ -24,4 +27,5 @@ vim.api.nvim_set_keymap('n', ';', '<Nop>', { noremap = true, silent = true })
 vim.cmd [[
 command! BufOnly %bd | e#
   ]]
+
 
