@@ -1,0 +1,28 @@
+#!/bin/bash
+url=$1
+
+if [ -z "$url" ]; then
+  # kill the running expose process
+  pkill -f "php /home/young/.config/composer/vendor/bin/expose share localhost:3000"
+
+  # Run the expose command in the background and redirect the output to a temporary file
+  expose share localhost:3000 > /tmp/expose_output.txt &
+
+  # Wait for a few seconds to allow the expose command to start and generate the output
+  sleep 5
+
+  # Extract the Public HTTPS URL from the temporary file
+  public_https=$(grep -o 'https://[a-zA-Z0-9.-]\+.sharedwithexpose.com' /tmp/expose_output.txt)
+
+  # Print the Public HTTPS URL
+  #echo "$public_https"
+
+  # Clean up the temporary file
+  rm /tmp/expose_output.txt
+else
+  public_https=$url
+fi
+
+# start shopify app dev
+echo "shopify app dev --tunnel-url" "$public_https:3000"
+shopify app dev --tunnel-url "$public_https:3000"
